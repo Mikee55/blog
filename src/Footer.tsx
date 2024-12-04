@@ -1,6 +1,6 @@
 const Footer = () => {
   return (
-    <footer>
+    <footer className="flex justify-evenly bg-gray-100">
       <div>
         <h3>FAQ</h3>
         <p>What is UpScale?</p>
