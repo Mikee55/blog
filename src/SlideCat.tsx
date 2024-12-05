@@ -7,7 +7,7 @@ import Additional from "./iconComponenets/Additional";
 const SlideCat = () => {
   return (
     <div className="flex justify-evenly bg-gray-100">
-      <div className="p-8">
+      <div className="p-8 cursor-pointer">
         <div className="">
           <Architecture className="h-32 fill-red-600" />
         </div>
