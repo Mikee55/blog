@@ -9,11 +9,13 @@ function App() {
   return (
     <>
       <NavBar />
-      <ImgCard />
-      <Slogan />
-      <SlideCat />
-      <Post />
-      <Footer />
+      <div>
+        <ImgCard />
+        <Slogan />
+        <SlideCat />
+        <Post />
+        <Footer />
+      </div>
     </>
   );
 }

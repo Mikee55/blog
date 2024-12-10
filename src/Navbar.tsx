@@ -1,21 +1,26 @@
+import { Link } from "react-router-dom";
+
 const NavBar = () => {
   return (
     <div className="fixed z-10 top-0 flex justify-between py-3 w-full bg-gray-100">
       <h1 className="px-10 text-2xl font-bold cursor-pointer text-stone-500">
         UpSpace
       </h1>
-      <ul className="flex items-center">
+      <ul className="flex items-center m-2">
         <li className="px-3">
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li className="px-3">
-          <a href="#">Categories</a>
+          <Link to="/categories">Categories</Link>
         </li>
         <li className="px-3">
           <a href="#">About</a>
         </li>
         <li className="px-3">
           <a href="#">Contact</a>
+        </li>
+        <li className="flex items-center px-5 text-slate-100 bg-slate-400 rounded-lg h-7">
+          <a href="#">New Blog</a>
         </li>
       </ul>
     </div>
