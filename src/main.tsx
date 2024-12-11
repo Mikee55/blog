@@ -5,6 +5,8 @@ import App from "./App.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Categories from "./Categories.tsx";
+import BlogDetail from "./BlogDetail.tsx";
+import NewBlog from "./NewBlog.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,8 +15,16 @@ const router = createBrowserRouter([
     // errorElement: <div>404 Not Found</div>,
   },
   {
-    path: "categories",
+    path: "/categories",
     element: <Categories />,
+  },
+  {
+    path: "/blog/:id",
+    element: <BlogDetail />,
+  },
+  {
+    path: "/newblog",
+    element: <NewBlog />,
   },
 ]);
 
