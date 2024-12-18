@@ -10,26 +10,36 @@ const NewBlog = () => {
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
   const [date, setDate] = useState("");
+  const [error, setError] = useState(null);
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     const blog = { title, description, author, date };
 
-    fetch("http://localhost:3000/blogs", {
-      method: "POST",
-      headers: { "content-Type": "application/json" },
-      body: JSON.stringify(blog),
-    }).then(() => {
+    try {
+      const response = await fetch("/api/blogs", {
+        method: "POST",
+        headers: { "content-Type": "application/json" },
+        body: JSON.stringify(blog),
+      });
       console.log("new blog added");
       toast.success("Blog added succesfully!", {
         hideProgressBar: true,
       });
       setTimeout(() => {
         navigate("/");
-      }, 2000); // Redirect after 3 seconds
-    });
+      }, 1500);
+
+      const json = await response.json();
+
+      if (!response) {
+        setError(json.error);
+      }
+    } catch (error) {
+      console.error("Fetch error");
+    }
   };
 
   return (

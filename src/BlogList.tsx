@@ -5,15 +5,15 @@ import { Link } from "react-router-dom";
 const BlogList = (props: any) => {
   const blogs = props.blogs;
   const isSingleBlog = props.isSingleBlog;
-  //   const title = props.title;
+
   return (
     <div>
       {blogs.map((blog: any) => (
         <div
           className="m-10 border rounded-3xl shadow overflow-hidden"
-          key={blog.id}
+          key={blog._id}
         >
-          <Link to={`/blog/${blog.id}`}>
+          <Link to={`/blog/${blog._id}`}>
             <img src={FirstPost} alt="Post 1" className="w-full object-cover" />
           </Link>
 

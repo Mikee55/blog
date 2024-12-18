@@ -18,11 +18,11 @@ const blogSchema = new Schema(
     },
     date: {
       type: Date,
-      required: true,
+      required: false,
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }

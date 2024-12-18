@@ -1,5 +1,7 @@
 import Footer from "./Footer";
 import NavBar from "./NavBar";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useEffect, useState } from "react";
 
@@ -15,7 +17,7 @@ const BlogDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/blogs/${id}`)
+    fetch(`/api/blogs/${id}`)
       .then((res) => {
         return res.json();
       })
@@ -25,10 +27,15 @@ const BlogDetail = () => {
   }, [id]);
 
   const handleClick = () => {
-    fetch(`http://localhost:3000/blogs/${id}`, {
+    fetch(`/api/blogs/${id}`, {
       method: "DELETE",
     }).then(() => {
-      navigate("/");
+      toast.success("Blog deleted succesfully!", {
+        hideProgressBar: true,
+      });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
     });
   };
   return (
@@ -47,6 +54,7 @@ const BlogDetail = () => {
       </div>
 
       <Footer />
+      <ToastContainer />
     </>
   );
 };

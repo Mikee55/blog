@@ -6,14 +6,14 @@ const Post = () => {
   const [blogs, setBlogs] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3000/blogs")
+    fetch("/api/blogs")
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setBlogs(data);
       });
-  });
+  }, []);
 
   return (
     <div className="mx-40 my-32">
