@@ -5,6 +5,7 @@ import IntImg from "./assets/Interior.jpg";
 import LandImg from "./assets/Landscape.jpg";
 import ConImg from "./assets/Construction.jpg";
 import MoreImg from "./assets/More.jpg";
+import { Link } from "react-router-dom";
 
 const Categories = () => {
   return (
@@ -17,11 +18,13 @@ const Categories = () => {
             alt="Architecture"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex justify-center items-center ">
-            <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60">
-              Architecture
-            </h1>
-          </div>
+          <Link to="/categories/:categories">
+            <div className="absolute inset-0 flex justify-center items-center ">
+              <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60 hover:bg-orange-600">
+                Architecture
+              </h1>
+            </div>
+          </Link>
         </div>
         <div className="p-28 relative overflow-hidden">
           <img
@@ -29,24 +32,34 @@ const Categories = () => {
             alt="Interior"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex justify-center items-center ">
-            <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60">
-              Interior
-            </h1>
+          <Link to="/">
+            <div className="absolute inset-0 flex justify-center items-center ">
+              <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
+                Interior
+              </h1>
+            </div>
+          </Link>
+        </div>
+        <div className="p-28 relative bg-slate-200">
+          <div className="absolute inset-0 flex flex-col justify-center items-center  font-bold text-sky-700 text-opacity-70 ">
+            <h1 className="min-w-max text-center"> Reimagine</h1>
+            <h1 className="min-w-max text-center"> Recreate</h1>
+            <h1 className="min-w-max text-center"> Revitalize</h1>
           </div>
         </div>
-        <div className="p-28 bg-slate-200"></div>
         <div className="p-28 relative overflow-hidden">
           <img
             src={LandImg}
             alt="Landscape"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex justify-center items-center ">
-            <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60">
-              Landscape
-            </h1>
-          </div>
+          <Link to="/">
+            <div className="absolute inset-0 flex justify-center items-center ">
+              <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
+                Landscape
+              </h1>
+            </div>
+          </Link>
         </div>
         <div className="p-28 relative overflow-hidden">
           <img
@@ -54,11 +67,13 @@ const Categories = () => {
             alt="construction"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex justify-center items-center ">
-            <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60">
-              Construction
-            </h1>
-          </div>
+          <Link to="/">
+            <div className="absolute inset-0 flex justify-center items-center ">
+              <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
+                Construction
+              </h1>
+            </div>
+          </Link>
         </div>
         <div className="p-28 relative overflow-hidden">
           <img
@@ -66,11 +81,13 @@ const Categories = () => {
             alt="Additional"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <div className="absolute inset-0 flex justify-center items-center ">
-            <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60">
-              More +
-            </h1>
-          </div>
+          <Link to="/">
+            <div className="absolute inset-0 flex justify-center items-center ">
+              <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
+                More +
+              </h1>
+            </div>
+          </Link>
         </div>
       </div>
       <Footer />

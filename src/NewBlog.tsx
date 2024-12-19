@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const NewBlog = () => {
   const [title, setTitle] = useState("");
+  const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
   const [date, setDate] = useState("");
@@ -16,7 +17,7 @@ const NewBlog = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const blog = { title, description, author, date };
+    const blog = { title, description, category, author, date };
 
     try {
       const response = await fetch("/api/blogs", {
@@ -58,6 +59,23 @@ const NewBlog = () => {
               setTitle(e.target.value);
             }}
           />
+
+          <label className="p-2">Category</label>
+          <select
+            id="category"
+            name="category"
+            className="border-2 rounded-lg"
+            value={category}
+            onChange={(e) => {
+              setCategory(e.target.value);
+            }}
+          >
+            <option value="">Please choose a category</option>
+            <option value="Architecture">Architecture</option>
+            <option value="Interior">Interior</option>
+            <option value="Landscape">Landscape</option>
+            <option value="Other">Other</option>
+          </select>
 
           <label className="p-2">Description</label>
           <textarea

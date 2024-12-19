@@ -13,9 +13,17 @@ const BlogList = (props: any) => {
           className="m-10 border rounded-3xl shadow overflow-hidden"
           key={blog._id}
         >
-          <Link to={`/blog/${blog._id}`}>
+          {isSingleBlog ? (
             <img src={FirstPost} alt="Post 1" className="w-full object-cover" />
-          </Link>
+          ) : (
+            <Link to={`/blog/${blog._id}`}>
+              <img
+                src={FirstPost}
+                alt="Post 1"
+                className="w-full object-cover"
+              />
+            </Link>
+          )}
 
           <div className="mx-5 p-2">
             <div className="text-xs text-slate-500 px-2">

@@ -14,12 +14,12 @@ const NavBar = () => {
           <Link to="/categories">Categories</Link>
         </li>
         <li className="px-3">
-          <a href="#">About</a>
+          <Link to="/about">About</Link>
         </li>
         <li className="px-3">
-          <a href="#">Contact</a>
+          <Link to="/contact">Contact</Link>
         </li>
-        <li className="flex items-center px-5 text-slate-100 bg-slate-400 rounded-lg h-7">
+        <li className="flex items-center px-5 text-slate-100 bg-sky-700 bg-opacity-85 rounded-lg h-7  hover:bg-orange-600">
           <Link to="/newblog">New Blog</Link>
         </li>
       </ul>

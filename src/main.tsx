@@ -5,8 +5,11 @@ import App from "./App.tsx";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Categories from "./Categories.tsx";
+import About from "./About.tsx";
 import BlogDetail from "./BlogDetail.tsx";
 import NewBlog from "./NewBlog.tsx";
+import Contact from "./Contact.tsx";
+import CatBlogs from "./CatBlogs.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,8 +22,20 @@ const router = createBrowserRouter([
     element: <Categories />,
   },
   {
+    path: "/about",
+    element: <About />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
+  },
+  {
     path: "/blog/:id",
     element: <BlogDetail />,
+  },
+  {
+    path: "/categories/:categories",
+    element: <CatBlogs />,
   },
   {
     path: "/newblog",
