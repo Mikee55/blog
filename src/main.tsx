@@ -10,12 +10,12 @@ import BlogDetail from "./BlogDetail.tsx";
 import NewBlog from "./NewBlog.tsx";
 import Contact from "./Contact.tsx";
 import CatBlogs from "./CatBlogs.tsx";
+import Signin from "./Signin.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    // errorElement: <div>404 Not Found</div>,
   },
   {
     path: "/categories",
@@ -40,6 +40,10 @@ const router = createBrowserRouter([
   {
     path: "/newblog",
     element: <NewBlog />,
+  },
+  {
+    path: "/signin",
+    element: <Signin />,
   },
 ]);
 

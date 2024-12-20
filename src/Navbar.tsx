@@ -16,11 +16,12 @@ const NavBar = () => {
         <li className="px-3">
           <Link to="/about">About</Link>
         </li>
-        <li className="px-3">
-          <Link to="/contact">Contact</Link>
+
+        <li className="flex items-center px-5 mx-4 text-slate-800 bg-opacity-85 rounded-lg h-7 border-2 border-sky-700 hover:bg-orange-600">
+          <Link to="/newblog">Add Blog</Link>
         </li>
-        <li className="flex items-center px-5 text-slate-100 bg-sky-700 bg-opacity-85 rounded-lg h-7  hover:bg-orange-600">
-          <Link to="/newblog">New Blog</Link>
+        <li className="flex items-center px-5 text-slate-100 border-2 border-sky-700 bg-sky-700 bg-opacity-85 rounded-lg h-7  hover:bg-orange-600">
+          <Link to="/signin">Login/Register</Link>
         </li>
       </ul>
     </div>
