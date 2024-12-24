@@ -21,7 +21,7 @@ const NavBar = () => {
           <Link to="/newblog">Add Blog</Link>
         </li>
         <li className="flex items-center px-5 text-slate-100 border-2 border-sky-700 bg-sky-700 bg-opacity-85 rounded-lg h-7  hover:bg-orange-600">
-          <Link to="/signin">Login/Register</Link>
+          <Link to="/login">Login/Register</Link>
         </li>
       </ul>
     </div>

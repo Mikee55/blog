@@ -10,7 +10,8 @@ import BlogDetail from "./BlogDetail.tsx";
 import NewBlog from "./NewBlog.tsx";
 import Contact from "./Contact.tsx";
 import CatBlogs from "./CatBlogs.tsx";
-import Signin from "./Signin.tsx";
+import Signup from "./Signup.tsx";
+import Login from "./Login.tsx";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +43,12 @@ const router = createBrowserRouter([
     element: <NewBlog />,
   },
   {
-    path: "/signin",
-    element: <Signin />,
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   },
 ]);
 
