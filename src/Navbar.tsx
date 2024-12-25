@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 
 const NavBar = () => {
+  const { isLoggedIn, logout } = useAuth();
   return (
     <div className="fixed z-10 top-0 flex justify-between py-3 w-full bg-gray-100">
       <h1 className="px-10 text-2xl font-bold cursor-pointer text-stone-500">
@@ -18,10 +20,14 @@ const NavBar = () => {
         </li>
 
         <li className="flex items-center px-5 mx-4 text-slate-800 bg-opacity-85 rounded-lg h-7 border-2 border-sky-700 hover:bg-orange-600">
-          <Link to="/newblog">Add Blog</Link>
+          <Link to={isLoggedIn ? "/newblog" : "/login"}>Add Blog</Link>
         </li>
         <li className="flex items-center px-5 text-slate-100 border-2 border-sky-700 bg-sky-700 bg-opacity-85 rounded-lg h-7  hover:bg-orange-600">
-          <Link to="/login">Login/Register</Link>
+          {isLoggedIn ? (
+            <button onClick={logout}>Logout</button>
+          ) : (
+            <Link to="/login">Login/Register</Link>
+          )}
         </li>
       </ul>
     </div>

@@ -4,6 +4,7 @@ import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { Link } from "react-router-dom";
+import { useAuth } from "./contexts/AuthContext";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +12,7 @@ const Login = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -22,14 +24,21 @@ const Login = () => {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(user),
       });
-      console.log("User Added");
-      toast.success("User added successfully", {
-        hideProgressBar: true,
-      });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      if (response.ok) {
+        console.log("User logged in");
+
+        const userData = await response.json();
+        console.log(userData);
+        login(userData);
+        toast.success("Welcome", {
+          hideProgressBar: true,
+        });
+
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      }
 
       const json = await response.json();
 

@@ -3,6 +3,7 @@ import Footer from "./Footer";
 import NavBar from "./NavBar";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { useAuth } from "./contexts/AuthContext";
 
 const Signup = () => {
   const [userName, setUserName] = useState("");
@@ -11,6 +12,7 @@ const Signup = () => {
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -22,22 +24,28 @@ const Signup = () => {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(user),
       });
-      console.log("User Added");
-      toast.success("User added successfully", {
-        hideProgressBar: true,
-      });
 
-      setTimeout(() => {
-        navigate("/");
-      }, 1500);
+      if (response.ok) {
+        console.log("User Added");
+        const userData = await response.json();
+        console.log(userData);
+        login(userData);
+        toast.success("User added successfully", {
+          hideProgressBar: true,
+        });
 
-      const json = await response.json();
-
-      if (!response) {
-        setError(json.error);
+        setTimeout(() => {
+          navigate("/");
+        }, 1500);
+      } else {
+        const json = await response.json();
+        setError(json.error || "An error occured during signup.");
+        toast.error(error, {
+          hideProgressBar: true,
+        });
       }
-    } catch {
-      console.error("Fetch error");
+    } catch (error) {
+      console.error("Fetch error", error);
     }
   };
 
