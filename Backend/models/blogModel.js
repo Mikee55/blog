@@ -28,6 +28,25 @@ const blogSchema = new Schema(
       type: String,
       required: false,
     },
+    likes: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+    comments: [
+      {
+        author: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+        content: String,
+      },
+    ],
+    shares: {
+      type: Number,
+      required: false,
+    },
   },
   { timestamps: true }
 );

@@ -43,7 +43,7 @@ const BlogList = (props: any) => {
 
           <hr className="mx-4" />
 
-          <SocialInteraction />
+          <SocialInteraction postId={blog._id} />
         </div>
       ))}
     </div>
