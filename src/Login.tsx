@@ -26,7 +26,7 @@ const Login = () => {
       });
 
       if (response.ok) {
-        console.log("User logged in");
+        console.log(response);
 
         const userData = await response.json();
         console.log(userData);
@@ -40,13 +40,13 @@ const Login = () => {
         }, 1500);
       }
 
-      const json = await response.json();
+      const json: any = await response.json();
 
       if (!response) {
         setError(json.error);
       }
-    } catch {
-      console.error("Fetch error");
+    } catch (error) {
+      console.error(error);
     }
   };
   return (

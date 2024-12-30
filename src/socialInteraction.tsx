@@ -3,9 +3,8 @@ import Comment from "./iconComponenets/Comment";
 import Share from "./iconComponenets/Share";
 import { useAuth } from "./contexts/AuthContext";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 interface SocialInteractionProps {
-  postId: any; // Assuming postId is a string
+  postId: any;
 }
 
 const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
@@ -16,7 +15,9 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const response = await fetch(`/api/posts/${postId}`);
+        if (!postId || !user) return;
+
+        const response = await fetch(`/api/blogs/${postId}`);
         if (!response.ok) {
           throw new Error("Failed to fetch post");
         }
@@ -24,7 +25,7 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
 
         const data = await response.json();
         setLikesCount(data.likes.length);
-        setIsLiked(data.likes.includes(user._id.toString()));
+        setIsLiked(data.likes.includes(user._id));
       } catch (error) {
         console.error("Error fetching post", error);
       }

@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
+import { useCookies } from "react-cookie";
+import { jwtDecode } from "jwt-decode";
 
 const AuthContext = createContext();
 
@@ -7,11 +9,64 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [cookie, setCookie, removeCookie] = useCookies(["userToken"]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = cookie.userToken;
+      console.log(token);
+
+      //   if (token) {
+      //     try {
+      //       const response = await fetch("/api/user/me", {
+      //         headers: {
+      //           Authorization: `Bearer ${token}`,
+      //         },
+      //       });
+      //       console.log(response);
+
+      //       if (response.ok) {
+      //         const userData = await response.json();
+      //         setUser(userData);
+      //         console.log(userData);
+      //       } else {
+      //         removeCookie("userToken");
+      //         setUser(null);
+      //       }
+      //     } catch (error) {
+      //       console.error("Error fetching user (cookie)", error);
+      //       removeCookie("userToken");
+      //       setUser(null);
+      //     }
+      //   } else {
+      //     console.error("Fetch error");
+      //   }
+      // };
+      if (token) {
+        try {
+          const decodedToken = jwtDecode(token);
+          setUser(decodedToken);
+          setIsLoggedIn(true);
+          console.log(decodedToken);
+          console.log(token);
+        } catch (error) {
+          console.error("Error decoding JWT:", error);
+          removeCookie("userToken");
+          setUser(null);
+          setIsLoggedIn(false);
+        }
+      }
+    };
+
+    fetchUser();
+    console.log(isLoggedIn, user, "token");
+  }, [cookie]);
 
   const login = (userData) => {
     console.log(userData);
     setIsLoggedIn(true);
     setUser(userData);
+    setCookie("userToken", userData.token, { path: "/", httpOnly: true });
   };
 
   const logout = () => {
@@ -22,6 +77,7 @@ export const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setUser(null);
     setShowLogoutModal(false);
+    removeCookie("userToken");
   };
 
   const logoutCancel = () => {
