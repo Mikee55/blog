@@ -9,64 +9,31 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [cookie, setCookie, removeCookie] = useCookies(["userToken"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["userToken"]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = cookie.userToken;
-      console.log(token);
-
-      //   if (token) {
-      //     try {
-      //       const response = await fetch("/api/user/me", {
-      //         headers: {
-      //           Authorization: `Bearer ${token}`,
-      //         },
-      //       });
-      //       console.log(response);
-
-      //       if (response.ok) {
-      //         const userData = await response.json();
-      //         setUser(userData);
-      //         console.log(userData);
-      //       } else {
-      //         removeCookie("userToken");
-      //         setUser(null);
-      //       }
-      //     } catch (error) {
-      //       console.error("Error fetching user (cookie)", error);
-      //       removeCookie("userToken");
-      //       setUser(null);
-      //     }
-      //   } else {
-      //     console.error("Fetch error");
-      //   }
-      // };
-      if (token) {
-        try {
-          const decodedToken = jwtDecode(token);
-          setUser(decodedToken);
-          setIsLoggedIn(true);
-          console.log(decodedToken);
-          console.log(token);
-        } catch (error) {
-          console.error("Error decoding JWT:", error);
-          removeCookie("userToken");
-          setUser(null);
-          setIsLoggedIn(false);
-        }
+    const checkCookies = () => {
+      if (Object.keys(cookies).length > 0) {
+        const token = cookies.userToken;
+        setUser(token);
+        setIsLoggedIn(true);
+      } else {
+        setIsLoggedIn(false);
       }
+      console.log(user);
+      console.log(isLoggedIn);
     };
 
-    fetchUser();
-    console.log(isLoggedIn, user, "token");
-  }, [cookie]);
+    checkCookies();
+  }, [isLoggedIn]); // Observe changes to the cookies object
 
   const login = (userData) => {
     console.log(userData);
     setIsLoggedIn(true);
     setUser(userData);
-    setCookie("userToken", userData.token, { path: "/", httpOnly: true });
+    setCookie("userToken", userData, { path: "/", httpOnly: false });
+    console.log(user);
+    console.log(cookies);
   };
 
   const logout = () => {
