@@ -3,14 +3,18 @@ import Comment from "./iconComponenets/Comment";
 import Share from "./iconComponenets/Share";
 import { useAuth } from "./contexts/AuthContext";
 import { useEffect, useState } from "react";
+import { Modal } from "react-bootstrap";
 interface SocialInteractionProps {
   postId: any;
 }
 
 const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [likesCount, setLikesCount] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
+
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [showCommentInput, setShowCommentInput] = useState(false);
 
   useEffect(() => {
     const fetchLikes = async () => {
@@ -22,6 +26,8 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
           throw new Error("Failed to fetch post");
         }
         console.log(postId);
+        console.log("reload");
+        console.log(user._id);
 
         const data = await response.json();
         setLikesCount(data.likes.length);
@@ -34,6 +40,7 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
     if (postId && user) {
       fetchLikes();
     }
+    console.log(isLiked);
   }, [postId, user]);
 
   const handleLike = async () => {
@@ -46,10 +53,12 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: `Bearer ${user.token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-      console.log(postId);
+
+      console.log(user);
+      console.log(token);
 
       if (!response.ok) {
         throw new Error("Failed to like the post");
@@ -59,6 +68,32 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
       setIsLiked(!isLiked);
     } catch (error) {
       console.log("Error liking the post", error);
+    }
+  };
+
+  const handleComment = async () => {
+    try {
+      if (!user) {
+        alert("Please login to comment");
+        return;
+      }
+
+      const response = await fetch(`/api/posts/${postId}/comment`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to comment");
+      }
+
+      const data = await response.json();
+      setCommentsCount(data.comments.length);
+    } catch (error) {
+      console.log("Error to post comment", error);
     }
   };
 
@@ -73,8 +108,26 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
         <p className="flex justify-center text-sm">{likesCount}</p>
       </div>
       <div className="p-2">
-        <Comment className="cursor-pointer size-5" />
-        <p className="flex justify-center text-sm">12</p>
+        <Comment
+          onClick={() => {
+            setShowCommentInput(!showCommentInput);
+          }}
+          className="cursor-pointer size-5"
+        />
+        <p className="flex justify-center text-sm">{commentsCount}</p>
+        {showCommentInput && (
+          <Modal
+            show={showCommentInput}
+            onClose={() => setShowCommentInput(false)}
+          >
+            <Modal.Body>
+              <div className="p-4">
+                <textarea className="w-full" />
+                <button>Submit</button>
+              </div>
+            </Modal.Body>
+          </Modal>
+        )}
       </div>
       <div className="p-2">
         <Share className="cursor-pointer size-5" />

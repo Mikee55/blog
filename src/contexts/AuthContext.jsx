@@ -10,17 +10,31 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies(["userToken"]);
+  const [token, setToken] = useState(null);
 
   useEffect(() => {
     const checkCookies = () => {
       if (Object.keys(cookies).length > 0) {
         const token = cookies.userToken;
-        setUser(token);
-        setIsLoggedIn(true);
+
+        console.log(token);
+        try {
+          const decodedToken = jwtDecode(token);
+          setUser(decodedToken); // Set user with decoded data
+          setIsLoggedIn(true);
+          setToken(token);
+
+          console.log(decodedToken);
+        } catch (error) {
+          console.error("Error decoding token:", error);
+          // Handle token decoding error (e.g., clear cookies)
+          removeCookie("userToken");
+        }
       } else {
         setIsLoggedIn(false);
       }
       console.log(user);
+      console.log();
       console.log(isLoggedIn);
     };
 
@@ -31,7 +45,7 @@ export const AuthProvider = ({ children }) => {
     console.log(userData);
     setIsLoggedIn(true);
     setUser(userData);
-    setCookie("userToken", userData, { path: "/", httpOnly: false });
+    setCookie("userToken", userData.token, { path: "/", httpOnly: false });
     console.log(user);
     console.log(cookies);
   };
@@ -52,7 +66,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, user, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, user, login, logout, token }}>
       {children}
       <Modal
         show={showLogoutModal}
