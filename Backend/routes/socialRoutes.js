@@ -37,11 +37,14 @@ router.post("/:postId/comment", authMiddleware, async (req, res) => {
       return res.status(400).json({ message: "Blog not found" });
     }
 
-    if (blog.comments.includes(req.userId)) {
-      await Blog.findByIdAndUpdate(postId, {
-        $push: { comments: { content: comment } },
-      });
-    }
+    await Blog.findByIdAndUpdate(postId, {
+      $push: { comments: { content: comment } },
+    });
+
+    console.log(comment);
+
+    const updatedBlog = await Blog.findById(postId); // Fetch updated blog data
+    res.json(updatedBlog);
   } catch (error) {
     console.error("Error fetching comment", error);
     res.status(500).jsosn({ message: "Server Error" });

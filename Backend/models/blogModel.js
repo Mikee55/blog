@@ -40,7 +40,10 @@ const blogSchema = new Schema(
           type: mongoose.Schema.ObjectId,
           ref: "User",
         },
-        content: String,
+        content: {
+          type: String,
+          required: false,
+        },
       },
     ],
     shares: {
