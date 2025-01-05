@@ -41,7 +41,7 @@ const BlogDetail = () => {
   return (
     <>
       <NavBar />
-      <div className="mx-40 mt-32">
+      <div className="sm:mx-40 mt-32">
         {blogs && <BlogList blogs={[blogs]} isSingleBlog={true} />}
       </div>
       <div className="flex justify-center m-10">

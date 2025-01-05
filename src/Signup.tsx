@@ -56,7 +56,10 @@ const Signup = () => {
         <h3 className="text-3xl">Sign Up</h3>
 
         <div className="">
-          <form onSubmit={handleSubmit} className="flex flex-col p-10 px-64">
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:p-10 sm:px-64"
+          >
             <label htmlFor="">User Name</label>
             <input
               type="text"

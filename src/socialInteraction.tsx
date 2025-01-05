@@ -23,6 +23,26 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
   const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
+    const storedLikes = localStorage.getItem(`likes-${postId}`);
+    const storedComments = localStorage.getItem(`comments-${postId}`);
+
+    if (storedLikes) {
+      try {
+        const parsedLikes = JSON.parse(storedLikes);
+        setLikesCount(parsedLikes.length);
+      } catch (error) {
+        console.error("Error parsing stored likes:", error);
+      }
+    }
+
+    if (storedComments) {
+      try {
+        const parsedComments = JSON.parse(storedComments) as Comment[];
+        setCommentsCount(parsedComments.length);
+      } catch (error) {
+        console.error("Error parsing stored comments:", error);
+      }
+    }
     const fetchLikes = async () => {
       try {
         if (!postId || !user) return;
@@ -42,6 +62,9 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
         setComments(data.comments as Comment[]);
 
         console.log(comments);
+        console.log(data.comments);
+
+        localStorage.setItem(`likes-${postId}`, JSON.stringify(data.likes));
 
         localStorage.setItem(
           `comments-${postId}`,
@@ -51,7 +74,6 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
         console.error("Error fetching post", error);
       }
     };
-    const storedComments = localStorage.getItem(`comments-${postId}`);
 
     if (storedComments) {
       try {
@@ -135,6 +157,32 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
     }
   };
 
+  const handleDeleteComment = async (commentId: string) => {
+    try {
+      const response = await fetch(
+        `/api/posts/${postId}/comment/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete comment");
+      }
+
+      // Update comments state after successful deletion
+      setComments((prevComments) =>
+        prevComments.filter((comment) => comment._id !== commentId)
+      );
+      setCommentsCount((prevCount) => prevCount - 1);
+    } catch (error) {
+      console.log("Error deleting comment:", error);
+    }
+  };
   return (
     <div>
       <div className="flex mx-2 px-3">
@@ -149,16 +197,20 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
         <div className="p-2">
           <Comment
             onClick={() => {
+              if (!user) {
+                alert("Please login to like this post");
+                return;
+              }
               setShowCommentInput(!showCommentInput);
             }}
             className="cursor-pointer size-5"
           />
           <p className="flex justify-center text-sm">{commentsCount}</p>
         </div>
-        <div className="p-2">
+        {/* <div className="p-2">
           <Share className="cursor-pointer size-5" />
           <p className="flex justify-center text-sm">7</p>
-        </div>
+        </div> */}
       </div>
       {showCommentInput && (
         <div>
@@ -175,16 +227,21 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
               Comment
             </button>
           </div>
-        </div>
-      )}
-      {comments.length > 0 && (
-        <div className="mt-2">
-          <h4 className="text-sm font-semibold">Comments:</h4>
-          <div className="">
-            {comments.map((comment) => (
-              <p key={comment._id}>{comment.content}</p>
-            ))}
-          </div>
+          {comments.length > 0 && (
+            <div className="mt-2">
+              <h4 className="text-sm font-semibold">Comments:</h4>
+              <div className="">
+                {comments.map((comment) => (
+                  <p key={comment._id}>
+                    {comment.content}
+                    <button onClick={() => handleDeleteComment(comment._id)}>
+                      Delete
+                    </button>{" "}
+                  </p>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>

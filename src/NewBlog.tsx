@@ -14,6 +14,7 @@ const NewBlog = () => {
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
   const [date, setDate] = useState("");
+  const [image, setImage] = useState(null);
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const NewBlog = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const blog = { title, description, category, author, date };
+    const blog = { title, description, category, author, date, image };
 
     try {
       const response = await fetch("/api/blogs", {
@@ -52,7 +53,10 @@ const NewBlog = () => {
       <NavBar />
       <div className="m-32">
         <h2 className="flex justify-center">Add a New Blog</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col p-10 px-64">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:p-10 sm:px-64"
+        >
           <label className="p-2">Blog title</label>
           <input
             type="text"

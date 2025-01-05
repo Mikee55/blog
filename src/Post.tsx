@@ -16,7 +16,7 @@ const Post = () => {
   }, []);
 
   return (
-    <div className="mx-40 my-32">
+    <div className="sm:mx-40 my-32">
       {blogs && <BlogList blogs={blogs} title="All Blogs" />}
     </div>
   );

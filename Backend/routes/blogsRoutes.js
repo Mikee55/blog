@@ -1,4 +1,7 @@
 const express = require("express");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
 const {
   getBlogs,
   getBlog,
@@ -13,7 +16,7 @@ router.get("/", getBlogs);
 
 router.get("/:id", getBlog);
 
-router.post("/", createBlog);
+router.post("/", upload.single("image"), createBlog);
 
 router.delete("/:id", deleteBlog);
 

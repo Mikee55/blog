@@ -1,5 +1,11 @@
 const { default: mongoose } = require("mongoose");
 const Blog = require("../models/blogModel");
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: "dhyha3lv4",
+  api_key: "296185512289852",
+  api_secret: "meyq6ZnRwpfzDfvLbqyxvuEdamc",
+});
 
 const getBlogs = async (req, res) => {
   const blogs = await Blog.find({});
@@ -22,17 +28,23 @@ const getBlog = async (req, res) => {
   res.status(200).json(blog);
 };
 
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
 const createBlog = async (req, res) => {
   const { title, description, category, author, date, image } = req.body;
 
   try {
+    const result = await cloudinary.uploader.upload(req.file.path);
+    const imageUrl = result.secure_url;
+
     const blog = await Blog.create({
       title,
       description,
       category,
       author,
       date,
-      image,
+      image: imageUrl,
     });
     res.status(200).json(blog);
   } catch (error) {
