@@ -11,14 +11,14 @@ const Categories = () => {
   return (
     <>
       <NavBar />
-      <div className="grid grid-cols-3 grid-rows-2 mt-36 m-32 gap-7">
+      <div className="grid grid-cols-1 sm:grid-cols-3 grid-rows-2 mt-36 m-20 sm:m-32 gap-7">
         <div className="p-28 relative overflow-hidden">
           <img
             src={ArchImg}
             alt="Architecture"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <Link to="/categories/:categories">
+          <Link to="/categories/Architecture">
             <div className="absolute inset-0 flex justify-center items-center ">
               <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60 hover:bg-orange-600">
                 Architecture
@@ -32,7 +32,7 @@ const Categories = () => {
             alt="Interior"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <Link to="/">
+          <Link to="/categories/Interior">
             <div className="absolute inset-0 flex justify-center items-center ">
               <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
                 Interior
@@ -53,7 +53,7 @@ const Categories = () => {
             alt="Landscape"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <Link to="/">
+          <Link to="/categories/Landscape">
             <div className="absolute inset-0 flex justify-center items-center ">
               <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
                 Landscape
@@ -67,7 +67,7 @@ const Categories = () => {
             alt="construction"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <Link to="/">
+          <Link to="/categories/Construction">
             <div className="absolute inset-0 flex justify-center items-center ">
               <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
                 Construction
@@ -81,7 +81,7 @@ const Categories = () => {
             alt="Additional"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <Link to="/">
+          <Link to="/categories/Other">
             <div className="absolute inset-0 flex justify-center items-center ">
               <h1 className="p-5 cursor-pointer text-white bg-sky-700 bg-opacity-60  hover:bg-orange-600">
                 More +

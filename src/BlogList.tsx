@@ -14,11 +14,15 @@ const BlogList = (props: any) => {
           key={blog._id}
         >
           {isSingleBlog ? (
-            <img src={FirstPost} alt="Post 1" className="w-full object-cover" />
+            <img
+              src={blog.image}
+              alt="Post 1"
+              className="w-full object-cover"
+            />
           ) : (
             <Link to={`/blog/${blog._id}`}>
               <img
-                src={FirstPost}
+                src={blog.image}
                 alt="Post 1"
                 className="w-full object-cover"
               />

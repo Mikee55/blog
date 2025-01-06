@@ -12,33 +12,49 @@ interface Blog {
 const CatBlogs = () => {
   const { category } = useParams<{ category: string }>();
   const [blogs, setBlogs] = useState<Blog[] | null>(null);
-  const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
+  // const [filteredBlogs, setFilteredBlogs] = useState<Blog[]>([]);
 
   useEffect(() => {
-    fetch(`/api/blogs/`)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data: Blog[]) => {
+    const fetchCategoryBlogs = async () => {
+      try {
+        const response = await fetch(`/api/blogs/categories/${category}`);
+        const data = await response.json();
         setBlogs(data);
-      });
-  }, []);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      }
+    };
 
-  useEffect(() => {
-    if (blogs) {
-      setFilteredBlogs(
-        blogs.filter((blog: any) => {
-          return blog.category === category;
-        })
-      );
-    }
-  }, [blogs, category]);
+    fetchCategoryBlogs();
+  }, [category]);
+
+  // useEffect(() => {
+  //   fetch(`/api/blogs`)
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data: Blog[]) => {
+  //       setBlogs(data);
+  //     });
+  // }, []);
+
+  // useEffect(() => {
+  //   if (blogs) {
+  //     setFilteredBlogs(
+  //       blogs.filter((blog: any) => {
+  //         return blog.category === category;
+  //       })
+  //     );
+  //   }
+
+  //   console.log(blogs);
+  // }, [blogs, category]);
 
   return (
     <>
       <NavBar />
-      <div className="mx-40 my-32">
-        {blogs && <BlogList blogs={filteredBlogs} />}
+      <div className="sm:mx-40 sm:my-32">
+        {blogs && <BlogList blogs={blogs} />}
       </div>
       <Footer />
     </>

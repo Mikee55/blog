@@ -5,6 +5,7 @@ const upload = multer({ dest: "uploads/" });
 const {
   getBlogs,
   getBlog,
+  getCategory,
   createBlog,
   deleteBlog,
   updateBlog,
@@ -15,6 +16,8 @@ const router = express.Router();
 router.get("/", getBlogs);
 
 router.get("/:id", getBlog);
+
+router.get("/categories/:category", getCategory);
 
 router.post("/", upload.single("image"), createBlog);
 

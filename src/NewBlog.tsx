@@ -14,7 +14,8 @@ const NewBlog = () => {
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
   const [date, setDate] = useState("");
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<any>(null);
+  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState(null);
 
   const navigate = useNavigate();
@@ -22,13 +23,22 @@ const NewBlog = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const blog = { title, description, category, author, date, image };
+    // const blog = { title, description, category, author, date, image };
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("author", author);
+    formData.append("date", date);
+    formData.append("image", image);
 
     try {
       const response = await fetch("/api/blogs", {
         method: "POST",
-        headers: { "content-Type": "application/json" },
-        body: JSON.stringify(blog),
+        // headers: { "content-Type": "application/json" },
+        // body: JSON.stringify(blog),
+        body: formData,
       });
       console.log("new blog added");
       toast.success("Blog added succesfully!", {
@@ -48,10 +58,16 @@ const NewBlog = () => {
     }
   };
 
+  const handleImageChange = (e: any) => {
+    const file = e.target.files[0];
+    setImage(file);
+    setImageUrl(URL.createObjectURL(file)); // For preview
+  };
+
   return (
     <>
       <NavBar />
-      <div className="m-32">
+      <div className="m-24 sm:m-32">
         <h2 className="flex justify-center">Add a New Blog</h2>
         <form
           onSubmit={handleSubmit}
@@ -81,6 +97,7 @@ const NewBlog = () => {
             <option value="">Please choose a category</option>
             <option value="Architecture">Architecture</option>
             <option value="Interior">Interior</option>
+            <option value="Construction">Construction</option>
             <option value="Landscape">Landscape</option>
             <option value="Other">Other</option>
           </select>
@@ -121,6 +138,7 @@ const NewBlog = () => {
             type="file"
             placeholder="select image"
             className="border-2 rounded-lg"
+            onChange={handleImageChange}
           />
 
           <div className="flex justify-center m-2">

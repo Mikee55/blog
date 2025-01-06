@@ -228,15 +228,15 @@ const SocialInteraction: React.FC<SocialInteractionProps> = ({ postId }) => {
             </button>
           </div>
           {comments.length > 0 && (
-            <div className="mt-2">
+            <div className="mt-2 ml-10">
               <h4 className="text-sm font-semibold">Comments:</h4>
               <div className="">
                 {comments.map((comment) => (
                   <p key={comment._id}>
                     {comment.content}
-                    <button onClick={() => handleDeleteComment(comment._id)}>
+                    {/* <button onClick={() => handleDeleteComment(comment._id)}>
                       Delete
-                    </button>{" "}
+                    </button> */}
                   </p>
                 ))}
               </div>
