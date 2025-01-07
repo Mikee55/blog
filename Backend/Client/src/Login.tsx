@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
@@ -43,10 +44,11 @@ const Login = () => {
       const json: any = await response.json();
 
       if (!response) {
+        alert("Please input correct credentials");
         setError(json.error);
       }
     } catch (error) {
-      console.error(error);
+      console.error({ message: "Error logging in" }, error);
     }
   };
   return (
